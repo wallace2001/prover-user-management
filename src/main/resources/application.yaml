@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: prover-test
+  profiles:
+    active: dev
+  liquibase:
+    enabled: true
+    change-log: classpath:/config/liquibase/master.xml
+    dropFirst: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      type_contribuitors: com.example.JsonbTypeContributor
+
+store:
+  distance:
+    range: 2
+
+server:
+  port: 8083
+
+resource-uri: https://api.github.com/user/repos
