@@ -1,4 +1,5 @@
 package com.prover.prover_test.domain.model;
+import com.prover.prover_test.domain.model.base.Auditable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Client {
+public class Client extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +29,5 @@ public class Client {
     private String phone;
 
     private String csvFilePath;
-
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
 }
 

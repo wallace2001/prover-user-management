@@ -21,6 +21,7 @@
             </column>
             <column name="enabled" type="boolean" defaultValueBoolean="true"/>
             <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
         </createTable>
 
         <addDefaultValue tableName="users" columnName="id" defaultValueComputed="${uuidFunction}"/>

@@ -4,7 +4,12 @@ import com.prover.prover_test.domain.model.Client;
 import com.prover.prover_test.domain.model.dto.ClientRequest;
 import com.prover.prover_test.domain.model.dto.ClientResponse;
 import com.prover.prover_test.domain.repository.ClientRepository;
+import com.prover.prover_test.infraestructure.exception.BusinessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +24,46 @@ public class ClientService {
         this.repository = repository;
     }
 
+    public void importClients(MultipartFile file) {
+        try {
+            Path storageDir = Paths.get("uploads/csv");
+            if (!Files.exists(storageDir)) {
+                Files.createDirectories(storageDir);
+            }
+
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path filePath = storageDir.resolve(fileName);
+
+            Files.write(filePath, file.getBytes());
+
+            try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+                List<Client> clients = new ArrayList<>();
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+
+                    String name = parts[0];
+                    String email = parts[1];
+                    String phone = parts[2];
+
+                    if (repository.findByEmail(email).isEmpty()) {
+                        clients.add(Client.builder()
+                                .name(name)
+                                .email(email)
+                                .phone(phone)
+                                .csvFilePath(filePath.toString())
+                                .build());
+                    }
+                }
+
+                repository.saveAll(clients);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao importar CSV", e);
+        }
+    }
+
     public List<ClientResponse> findAll() {
         return repository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
     }
@@ -28,6 +73,10 @@ public class ClientService {
     }
 
     public ClientResponse save(ClientRequest request) {
+        if (repository.findByEmail(request.email()).isPresent()) {
+            throw new BusinessException("E-mail já cadastrado.");
+        }
+
         Client client = Client.builder()
                 .name(request.name())
                 .email(request.email())
