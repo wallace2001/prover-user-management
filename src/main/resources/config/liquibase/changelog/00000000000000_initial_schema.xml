@@ -36,6 +36,26 @@
             </column>
         </createTable>
 
+        <createTable tableName="clients">
+            <column name="id" type="${uuidType}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="phone" type="varchar(20)"/>
+            <column name="csv_file_path" type="varchar(512)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+        </createTable>
+
+        <addDefaultValue tableName="clients" columnName="id" defaultValueComputed="${uuidFunction}"/>
+        <addDefaultValue tableName="clients" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="clients" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
         <!-- Tabela intermediária user_roles -->
         <createTable tableName="user_roles">
             <column name="user_id" type="${uuidType}">
