@@ -14,6 +14,11 @@ spring:
       show-sql: true
       type_contribuitors: com.example.JsonbTypeContributor
 
+security:
+  jwt:
+    secret: MinhasChavesJWT12345678901234567890123456789012
+    expiration-ms: 3600000 # 1 hora
+
 store:
   distance:
     range: 2

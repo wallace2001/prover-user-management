@@ -28,7 +28,7 @@
 
         <!-- Tabela de roles -->
         <createTable tableName="roles">
-            <column name="id" type="serial">
+            <column name="id" type="${uuidType}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(50)">
@@ -61,7 +61,7 @@
             <column name="user_id" type="${uuidType}">
                 <constraints nullable="false"/>
             </column>
-            <column name="role_id" type="int">
+            <column name="role_id" type="${uuidType}">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -77,6 +77,32 @@
                                  referencedTableName="roles"
                                  referencedColumnNames="id"
                                  constraintName="fk_user_roles_role"/>
+
+
+
+<!--        Inserindo dados MOCKS de usuário-->
+
+        <!-- Role ADMIN -->
+        <insert tableName="roles">
+            <column name="id" value="00000000-0000-0000-0000-000000000001"/>
+            <column name="name" value="ADMIN"/>
+        </insert>
+
+        <!-- Usuário admin -->
+        <insert tableName="users">
+            <column name="id" value="00000000-0000-0000-0000-000000000010"/>
+            <column name="username" value="admin"/>
+            <column name="email" value="admin@prover.com"/>
+            <column name="password" value="$2b$12$eobaBgQVu.4KW717SQyHVeSsJqFS36ixB2YW1/Ukz0qV74XcLy8hS"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="created_at" valueDate="2025-06-04T00:00:00"/>
+        </insert>
+
+        <!-- Relacionamento user -> role -->
+        <insert tableName="user_roles">
+            <column name="user_id" value="00000000-0000-0000-0000-000000000010"/>
+            <column name="role_id" value="00000000-0000-0000-0000-000000000001"/>
+        </insert>
 
     </changeSet>
 </databaseChangeLog>
