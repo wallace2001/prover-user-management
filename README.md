@@ -1,81 +1,82 @@
+
 # Prover Test Application
 
-Este é um projeto Spring Boot que demonstra autenticação com JWT, CRUD completo de clientes, importação via CSV e estrutura de testes automatizados com cobertura Jacoco.
+Sistema completo com autenticação JWT e CRUD de clientes, incluindo importação via CSV.
 
-## Tecnologias Utilizadas
+## 🧰 Tecnologias
 
 - Java 17
 - Spring Boot 3.5
-- Spring Security + JWT
-- Spring Data JPA + Hibernate
+- Spring Security
 - PostgreSQL
 - Liquibase
-- Maven
-- JUnit 5 + Mockito
-- Jacoco
-- Swagger (OpenAPI 3)
+- Docker / Docker Compose
+- Jacoco (para cobertura de testes)
+- JUnit 5
+- Mockito
+- OpenAPI (Swagger)
 
-## Funcionalidades
+---
 
-- Autenticação com JWT (Login)
-- CRUD de Clientes
-- Importação de clientes via arquivo CSV
-- Validações e tratativas de exceções personalizadas
-- Testes unitários com cobertura
-- Documentação Swagger
+## 🚀 Como rodar o projeto
 
-## Executando o Projeto
+### Com Docker (recomendado)
 
-Certifique-se de ter o PostgreSQL rodando com a base configurada no `application.properties`.
+1. Certifique-se de ter o Docker e Docker Compose instalados.
+
+2. Execute:
 
 ```bash
-mvn spring-boot:run
+docker compose up --build
 ```
 
-## Executando os Testes
+> Isso irá subir o banco de dados PostgreSQL e a aplicação Spring Boot automaticamente.
+
+---
+
+## ✅ Testes
 
 ```bash
-mvn clean test
+   mvn clean test
 ```
 
-Para gerar o relatório de cobertura:
+Relatório de cobertura será gerado em: `target/site/jacoco/index.html`
 
-```bash
-mvn jacoco:report
-```
+---
 
-Relatório será gerado em: `target/site/jacoco/index.html`
+## 📦 Importação via CSV
 
-## Endpoints
+Faça upload de um arquivo `.csv` com os campos: `nome,email,telefone`.
 
-Documentação dos endpoints disponível via Swagger:
+Endpoint disponível na documentação Swagger.
 
-```
-http://localhost:8080/swagger-ui/index.html
-```
+---
 
-## Estrutura do Projeto
+## 📄 Documentação
+
+Swagger UI disponível em:
 
 ```
-src
-├── main
-│   └── java
-│       └── com.prover.prover_test
-│           ├── application
-│           │   ├── controller
-│           │   └── service
-│           ├── domain
-│           │   ├── model
-│           │   └── repository
-│           └── infraestructure
-│               ├── config
-│               ├── exception
-│               └── security
-└── test
-    └── java
-        └── com.prover.prover_test
+http://localhost:8080/swagger-ui.html
 ```
 
-## Autor
+---
 
-Desenvolvido por Wallace Silva.
+## 🐳 Docker Compose
+
+Estrutura de containers:
+
+- `app`: aplicação Spring Boot
+- `db`: PostgreSQL
+
+---
+
+## 👨‍💻 Autor
+
+Wallace Silva — [GitHub](https://github.com/wallace-silva)
+
+---
+
+## 📝 Licença
+
+MIT
