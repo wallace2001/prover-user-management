@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: postgis/postgis:16-3.4
-    container_name: postgres_postgis
+    image: postgres:latest
     restart: always
     ports:
       - 5432:5432
@@ -13,21 +12,27 @@ services:
       POSTGRES_DB: prover
     volumes:
       - ./init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     networks:
       - app
 
-#  app:
-#    build: .
-#    ports:
-#      - 8083:8083
-#    depends_on:
-#      - db
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/prover
-#      SPRING_DATASOURCE_USERNAME: myuser
-#      SPRING_DATASOURCE_PASSWORD: mypassword
-#    networks:
-#      - app
+  app:
+    build: .
+    ports:
+      - 8083:8083
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/prover
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+    networks:
+      - app
 
   pgadmin:
     image: dpage/pgadmin4:latest
