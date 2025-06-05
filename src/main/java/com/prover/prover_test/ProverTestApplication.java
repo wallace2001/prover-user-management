@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ProverTestApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProverTestApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(ProverTestApplication.class, args);
+  }
 }

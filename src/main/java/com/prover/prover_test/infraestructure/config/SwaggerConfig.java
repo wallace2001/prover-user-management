@@ -9,14 +9,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(title = "Prover Test API", version = "v1", description = "Documentação da API"),
-        security = @SecurityRequirement(name = "bearerAuth")
-)
+    info = @Info(title = "Prover Test API", version = "v1", description = "Documentação da API"),
+    security = @SecurityRequirement(name = "bearerAuth"))
 @SecurityScheme(
-        name = "bearerAuth",
-        type = SecuritySchemeType.HTTP,
-        bearerFormat = "JWT",
-        scheme = "bearer"
-)
-public class SwaggerConfig {
-}
+    name = "bearerAuth",
+    type = SecuritySchemeType.HTTP,
+    bearerFormat = "JWT",
+    scheme = "bearer")
+public class SwaggerConfig {}
